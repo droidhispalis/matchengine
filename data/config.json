@@ -1,0 +1,9 @@
+{
+  "queries": [
+    "site:juntadeandalucia.es convocatoria empleo publico discapacidad",
+    "site:juntadeandalucia.es proceso selectivo discapacidad",
+    "junta de andalucia oposiciones discapacidad plazo solicitud"
+  ],
+  "maxResults": 10,
+  "runIntervalMinutes": 30
+}
