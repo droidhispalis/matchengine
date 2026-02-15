@@ -43,7 +43,7 @@ export function verifyToken(token: string): any {
   }
 }
 
-export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+export function authMiddleware(req, res, next) {
   // Obtener token de header Authorization o cookie
   const authHeader = req.headers.authorization;
   const token = authHeader?.startsWith('Bearer ') 
@@ -64,7 +64,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
 }
 
 // Middleware opcional - solo verifica si hay token pero no falla si no existe
-export function optionalAuthMiddleware(req: Request, res: Response, next: NextFunction) {
+export function optionalAuthMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
   const token = authHeader?.startsWith('Bearer ') 
     ? authHeader.substring(7) 
