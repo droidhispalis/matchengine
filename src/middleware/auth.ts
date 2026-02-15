@@ -1,9 +1,4 @@
 import jwt from 'jsonwebtoken';
-import express from 'express';
-
-type Request = express.Request;
-type Response = express.Response;
-type NextFunction = express.NextFunction;
 
 // Augment Express Request type to include user property
 declare global {
