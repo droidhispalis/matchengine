@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -143,7 +143,7 @@ app.post("/api/auth/login", async (req, res) => {
 });
 
 // Obtener usuario actual (me)
-app.get("/api/auth/me", authMiddleware, async (req: Request, res) => {
+app.get("/api/auth/me", authMiddleware, async (req, res) => {
   try {
     if (!req.user) {
       return res.status(401).json({ error: "No autenticado" });
@@ -476,7 +476,7 @@ app.post("/api/workers/run/:worker", async (req, res) => {
 // ============================================
 
 // Crear webhook
-app.post("/api/users/:userId/webhooks", authMiddleware, async (req: Request, res) => {
+app.post("/api/users/:userId/webhooks", authMiddleware, async (req, res) => {
   try {
     const userId = parseInt(req.params.userId);
     const { name, url, events, method, headers, secret, is_active } = req.body;
@@ -500,7 +500,7 @@ app.post("/api/users/:userId/webhooks", authMiddleware, async (req: Request, res
 });
 
 // Obtener webhooks de un usuario
-app.get("/api/users/:userId/webhooks", authMiddleware, async (req: Request, res) => {
+app.get("/api/users/:userId/webhooks", authMiddleware, async (req, res) => {
   try {
     const userId = parseInt(req.params.userId);
     const webhooks = await getUserWebhooks(userId);
@@ -511,7 +511,7 @@ app.get("/api/users/:userId/webhooks", authMiddleware, async (req: Request, res)
 });
 
 // Obtener webhook específico
-app.get("/api/webhooks/:webhookId", authMiddleware, async (req: Request, res) => {
+app.get("/api/webhooks/:webhookId", authMiddleware, async (req, res) => {
   try {
     const webhookId = parseInt(req.params.webhookId);
     const webhook = await getWebhookById(webhookId);
@@ -527,7 +527,7 @@ app.get("/api/webhooks/:webhookId", authMiddleware, async (req: Request, res) =>
 });
 
 // Actualizar webhook
-app.patch("/api/webhooks/:webhookId", authMiddleware, async (req: Request, res) => {
+app.patch("/api/webhooks/:webhookId", authMiddleware, async (req, res) => {
   try {
     const webhookId = parseInt(req.params.webhookId);
     await updateWebhook(webhookId, req.body);
@@ -538,7 +538,7 @@ app.patch("/api/webhooks/:webhookId", authMiddleware, async (req: Request, res) 
 });
 
 // Eliminar webhook
-app.delete("/api/webhooks/:webhookId", authMiddleware, async (req: Request, res) => {
+app.delete("/api/webhooks/:webhookId", authMiddleware, async (req, res) => {
   try {
     const webhookId = parseInt(req.params.webhookId);
     await deleteWebhook(webhookId);
@@ -549,7 +549,7 @@ app.delete("/api/webhooks/:webhookId", authMiddleware, async (req: Request, res)
 });
 
 // Obtener logs de webhook
-app.get("/api/webhooks/:webhookId/logs", authMiddleware, async (req: Request, res) => {
+app.get("/api/webhooks/:webhookId/logs", authMiddleware, async (req, res) => {
   try {
     const webhookId = parseInt(req.params.webhookId);
     const limit = parseInt(req.query.limit as string) || 50;
@@ -579,7 +579,7 @@ app.get("/api/webhooks/events", (req, res) => {
 // ============================================
 
 // Exportar oportunidades a CSV
-app.get("/api/users/:userId/opportunities/export/csv", authMiddleware, async (req: Request, res) => {
+app.get("/api/users/:userId/opportunities/export/csv", authMiddleware, async (req, res) => {
   try {
     const userId = parseInt(req.params.userId);
     
@@ -612,7 +612,7 @@ app.get("/api/users/:userId/opportunities/export/csv", authMiddleware, async (re
 });
 
 // Exportar oportunidades a Excel
-app.get("/api/users/:userId/opportunities/export/excel", authMiddleware, async (req: Request, res) => {
+app.get("/api/users/:userId/opportunities/export/excel", authMiddleware, async (req, res) => {
   try {
     const userId = parseInt(req.params.userId);
     
