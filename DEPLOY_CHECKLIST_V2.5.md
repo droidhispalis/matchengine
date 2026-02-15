@@ -141,23 +141,48 @@ Deberías ver nuevas columnas:
 
 ---
 
-## ✅ FASE 5: REINICIAR SERVICIOS
+## ✅ FASE 5: INICIAR/REINICIAR SERVICIOS
 
-### 1. Parar servicios actuales
+### 1. Verificar que no hay errores de sintaxis (Opcional)
 ```bash
-pm2 stop matchengine-api
-pm2 stop matchengine-orchestrator
+cd /var/www/vhosts/tumanitasia.es/ia.tumanitasia.es
+tsx src/api/server.ts  # Ctrl+C después de verificar que arranca
 ```
 
-### 2. Verificar que no hay errores de sintaxis
+### 2. Iniciar servicios con PM2
+
+**Si es PRIMERA VEZ o quieres recrear los procesos:**
 ```bash
-pnpm api  # Ctrl+C después de verificar que arranca
+# Eliminar procesos existentes (ignorar errores si no existen)
+pm2 delete matchengine-api matchengine-orchestrator
+
+# Iniciar procesos
+pm2 start src/api/server.ts --name matchengine-api --interpreter tsx
+pm2 start src/workers/orchestrator.ts --name matchengine-orchestrator --interpreter tsx
+
+# Guardar configuración para auto-restart en reboot
+pm2 save
+pm2 startup
 ```
 
-### 3. Reiniciar con PM2
+**Si los procesos ya existen y solo necesitas reiniciar:**
 ```bash
-pm2 restart matchengine-api
-pm2 restart matchengine-orchestrator
+pm2 restart matchengine-api matchengine-orchestrator
+```
+
+### 3. Verificar estado
+```bash
+pm2 status
+```
+
+Deberías ver:
+```
+┌─────┬───────────────────────────┬─────────┬─────────┐
+│ id  │ name                      │ status  │ restart │
+├─────┼───────────────────────────┼─────────┼─────────┤
+│ 0   │ matchengine-api           │ online  │ 0       │
+│ 1   │ matchengine-orchestrator  │ online  │ 0       │
+└─────┴───────────────────────────┴─────────┴─────────┘
 ```
 
 ### 4. Ver logs en tiempo real

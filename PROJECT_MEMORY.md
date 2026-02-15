@@ -220,9 +220,18 @@ triggered_at
 - **URL**: https://ia.tumanitasia.es
 
 ### Proceso Manager (PM2)
+
+**Primera vez:**
 ```bash
 pm2 start src/api/server.ts --name matchengine-api --interpreter tsx
 pm2 start src/workers/orchestrator.ts --name matchengine-orchestrator --interpreter tsx
+pm2 save
+pm2 startup
+```
+
+**Restart después de cambios:**
+```bash
+pm2 restart matchengine-api matchengine-orchestrator
 ```
 
 ### Variables de Entorno Requeridas
